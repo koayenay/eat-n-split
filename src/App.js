@@ -34,22 +34,20 @@ export default function App() {
     setShowAddFriend(false)
   }
   function handleSelection(friend) {
-    // setSelectedFriend(friend)
-    setSelectedFriend((selected) =>
-      selected?.id === friend.id ? null : friend
-    )
+    setSelectedFriend((cur) => (cur?.id === friend.id ? null : friend))
     setShowAddFriend(false)
   }
+
   function handleSplitBill(value) {
     setFriends((friends) =>
       friends.map((friend) =>
         friend.id === selectedFriend.id
-          ? { ...friends, balance: friend.balance + value }
+          ? { ...friend, balance: friend.balance + value }
           : friend
       )
     )
 
-    // setSelectedFriend(null)
+    setSelectedFriend(null)
   }
   return (
     <div className='app'>
@@ -71,11 +69,13 @@ export default function App() {
         <FormSplitBill
           selectedFriend={selectedFriend}
           onSplitBill={handleSplitBill}
+          key={selectedFriend.id}
         />
       )}
     </div>
   )
 }
+
 function Button({ children, onClick }) {
   return (
     <button onClick={onClick} className='button'>
